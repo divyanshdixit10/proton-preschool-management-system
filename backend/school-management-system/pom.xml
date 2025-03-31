@@ -73,6 +73,59 @@
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		
+		<dependency>
+   			<groupId>org.modelmapper</groupId>
+    		<artifactId>modelmapper</artifactId>
+    		<version>3.1.1</version>
+		</dependency>
+		<dependency>
+    		<groupId>org.springdoc</groupId>
+    		<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+    		<version>2.5.0</version>
+		</dependency>
+		<dependency>
+    		<groupId>io.jsonwebtoken</groupId>
+    		<artifactId>jjwt-api</artifactId>
+    		<version>0.11.5</version>
+		</dependency>
+		<dependency>
+   			<groupId>org.mapstruct</groupId>
+    		<artifactId>mapstruct</artifactId>
+    		<version>1.5.5.Final</version>
+		</dependency>
+		<dependency>
+    		<groupId>org.mapstruct</groupId>
+    		<artifactId>mapstruct-processor</artifactId>
+    		<version>1.5.5.Final</version>
+    		<scope>provided</scope>
+		</dependency>
+		<dependency>
+    		<groupId>org.springframework.security</groupId>
+    		<artifactId>spring-security-web</artifactId>
+    		<!-- Or your relevant version -->
+		</dependency>
+		<dependency>
+    		<groupId>org.springframework.boot</groupId>
+    		<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+		<dependency>
+    		<groupId>org.springframework.boot</groupId>
+    		<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+		<dependency>
+    		<groupId>org.springframework.security</groupId>
+    		<artifactId>spring-security-web</artifactId>
+		</dependency>
+		<dependency>
+    		<groupId>org.springframework.security</groupId>
+    		<artifactId>spring-security-config</artifactId>
+		</dependency>
+
+
+
+
+
 	</dependencies>
 
 	<build>
