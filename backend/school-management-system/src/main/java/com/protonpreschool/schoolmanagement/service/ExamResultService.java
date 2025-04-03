@@ -1,33 +1,20 @@
 package com.protonpreschool.schoolmanagement.service;
 
 import com.protonpreschool.schoolmanagement.dto.ExamResultDTO;
-import com.protonpreschool.schoolmanagement.model.ExamResult;
-import com.protonpreschool.schoolmanagement.repository.ExamResultRepository;
-import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import java.util.List;
-import java.util.stream.Collectors;
 
-@Service
-public class ExamResultService {
+public interface ExamResultService {  
 
-    @Autowired
-    private ExamResultRepository examResultRepository;
+    ExamResultDTO createExamResult(ExamResultDTO examResultDTO);
+    
+    ExamResultDTO getExamResultById(Long id);
+    
+    List<ExamResultDTO> getAllExamResults();
+    
+    ExamResultDTO updateExamResult(Long id, ExamResultDTO examResultDTO);
+    
+    void deleteExamResult(Long id);
 
-    @Autowired
-    private ModelMapper modelMapper;
-
-    public List<ExamResultDTO> getAllResults() {
-        return examResultRepository.findAll().stream()
-                .map(result -> modelMapper.map(result, ExamResultDTO.class))
-                .collect(Collectors.toList());
-    }
-
-    public ExamResultDTO addResult(ExamResultDTO examResultDTO) {
-        ExamResult examResult = modelMapper.map(examResultDTO, ExamResult.class);
-        ExamResult savedResult = examResultRepository.save(examResult);
-        return modelMapper.map(savedResult, ExamResultDTO.class);
-    }
+    // ✅ Add missing method definition
+    ExamResultDTO saveExamResult(ExamResultDTO examResultDTO);
 }

@@ -1,32 +1,36 @@
 package com.protonpreschool.schoolmanagement.model;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Table(name = "subjects")
-public class Subject extends BaseEntity {
-    /**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+public class Subject {
 
-	private String subjectName;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "class_id")
-    private SchoolClass schoolClass;
+    @Column(nullable = false)
+    private String subjectName;
 
+    private String description;
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
 	
-    
-    public String getSubjectName() {
-		return subjectName;
+	public void setSubjectName(String subjectName) {
+	    this.subjectName = subjectName;
 	}
 
-	public void setSubjectName(String subjectName) {
-		this.subjectName = subjectName;
-	}
 }

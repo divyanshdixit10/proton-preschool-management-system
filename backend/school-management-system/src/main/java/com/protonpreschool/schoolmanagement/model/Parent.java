@@ -1,40 +1,69 @@
 package com.protonpreschool.schoolmanagement.model;
 
-import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import java.util.HashSet;
+import java.util.Set;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 
 @Entity
-@Getter
-@Setter
 @Table(name = "parents")
-public class Parent extends BaseEntity {
-    /**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	private String phone;
-    private String address;
+public class Parent {
 
-    @OneToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-	
-    
-    public String getPhone() {
-		return phone;
-	}
+    @Column(nullable = false)
+    private String name;  // ✅ Added name field
 
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
+    @Column(nullable = false, unique = true)
+    private String phone;  // ✅ Added phone field
 
-	public String getAddress() {
-		return address;
-	}
+    @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL)
+    private Set<Student> children = new HashSet<>();
 
-	public void setAddress(String address) {
-		this.address = address;
-	}
+    // ✅ Default Constructor
+    public Parent() {}
+
+    // ✅ Constructor with fields
+    public Parent(String name, String phone) {
+        this.name = name;
+        this.phone = phone;
+    }
+
+    // ✅ Getters and Setters
+    public Long getId() {
+        return id;
+    }
+
+    public String getName() {  // ✅ Added getName() method
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getPhone() {  // ✅ Added getPhone() method
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public Set<Student> getChildren() {
+        return children;
+    }
+
+    public void setChildren(Set<Student> children) {
+        this.children = children;
+    }
 }

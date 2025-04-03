@@ -9,7 +9,8 @@ public class ExamResultDTO {
     private Long examId; // Reference to Exam
     private double marksObtained;
     private String grade;
-	
+    private Double score;  // Added `score` field
+
     
     public Long getId() {
 		return id;
@@ -40,5 +41,11 @@ public class ExamResultDTO {
 	}
 	public void setGrade(String grade) {
 		this.grade = grade;
+	}
+	public Double getScore() {
+		return score;
+	}
+	public void setScore(Double score) {
+		this.score = score;
 	}
 }

@@ -1,38 +1,38 @@
 package com.protonpreschool.schoolmanagement.service;
 
-import com.protonpreschool.schoolmanagement.dto.TeacherDTO;
-import com.protonpreschool.schoolmanagement.exception.ResourceNotFoundException;
-import com.protonpreschool.schoolmanagement.mapper.TeacherMapper;
 import com.protonpreschool.schoolmanagement.model.Teacher;
 import com.protonpreschool.schoolmanagement.repository.TeacherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TeacherService {
-
     @Autowired
     private TeacherRepository teacherRepository;
 
-    @Autowired
-    private TeacherMapper teacherMapper; // Injected TeacherMapper
-
-    public List<TeacherDTO> getAllTeachers() {
-        List<Teacher> teachers = teacherRepository.findAll();
-        return teacherMapper.toDTOList(teachers); // Use Mapper
+    public List<Teacher> getAllTeachers() {
+        return teacherRepository.findAll();
     }
 
-    public TeacherDTO getTeacherById(Long id) {
-        Teacher teacher = teacherRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Teacher with ID " + id + " not found"));
-        return teacherMapper.toDTO(teacher); // Use Mapper
+    public Optional<Teacher> getTeacherById(Long id) {
+        return teacherRepository.findById(id);
     }
 
-    public TeacherDTO addTeacher(TeacherDTO teacherDTO) {
-        Teacher teacher = teacherMapper.toEntity(teacherDTO); // Convert DTO to Entity
-        Teacher savedTeacher = teacherRepository.save(teacher);
-        return teacherMapper.toDTO(savedTeacher); // Convert back to DTO
+    public Teacher createTeacher(Teacher teacher) {
+        return teacherRepository.save(teacher);
+    }
+
+    public Teacher updateTeacher(Long id, Teacher teacherDetails) {
+        return teacherRepository.findById(id).map(teacher -> {
+            teacher.setName(teacherDetails.getName());
+            teacher.setSubject(teacherDetails.getSubject());
+            return teacherRepository.save(teacher);
+        }).orElseThrow(() -> new RuntimeException("Teacher not found"));
+    }
+
+    public void deleteTeacher(Long id) {
+        teacherRepository.deleteById(id);
     }
 }

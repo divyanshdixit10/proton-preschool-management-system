@@ -1,14 +1,14 @@
 package com.protonpreschool.schoolmanagement.dto;
 
 import lombok.Data;
-import java.time.LocalDate;
+import java.util.Date;
 
 @Data
 public class ExamDTO {
     private Long id;
-    private String examName;
-    private LocalDate examDate;
-    private Long classId; // Reference to SchoolClass
+    private String name;
+    private Date date;
+    private int totalMarks;
 	
     
     public Long getId() {
@@ -17,22 +17,22 @@ public class ExamDTO {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public String getExamName() {
-		return examName;
+	public String getName() {
+		return name;
 	}
-	public void setExamName(String examName) {
-		this.examName = examName;
+	public void setName(String name) {
+		this.name = name;
 	}
-	public LocalDate getExamDate() {
-		return examDate;
+	public Date getDate() {
+		return date;
 	}
-	public void setExamDate(LocalDate examDate) {
-		this.examDate = examDate;
+	public void setDate(Date date) {
+		this.date = date;
 	}
-	public Long getClassId() {
-		return classId;
+	public int getTotalMarks() {
+		return totalMarks;
 	}
-	public void setClassId(Long classId) {
-		this.classId = classId;
+	public void setTotalMarks(int totalMarks) {
+		this.totalMarks = totalMarks;
 	}
 }

@@ -1,41 +1,68 @@
 package com.protonpreschool.schoolmanagement.model;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity
-@Getter
-@Setter
 @Table(name = "exams")
-public class Exam extends BaseEntity {
-    /**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	private String examName;
-    private LocalDateTime examDate;
+public class Exam {
 
-    @ManyToOne
-    @JoinColumn(name = "class_id")
-    private SchoolClass schoolClass;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-	
-    
-    public String getExamName() {
-		return examName;
-	}
+    @Column(nullable = false, unique = true)
+    private String name;
 
-	public void setExamName(String examName) {
-		this.examName = examName;
-	}
+    @Column(nullable = false)
+    private String subject;
 
-	public LocalDateTime getExamDate() {
-		return examDate;
-	}
+    @Temporal(TemporalType.DATE)
+    @Column(nullable = false)
+    private Date date;
 
-	public void setExamDate(LocalDateTime examDate) {
-		this.examDate = examDate;
-	}
+    @Column(nullable = false)
+    private int totalMarks;
+
+    // ✅ Manually added getter & setter methods
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getSubject() {
+        return subject;
+    }
+
+    public void setSubject(String subject) {
+        this.subject = subject;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public int getTotalMarks() {
+        return totalMarks;
+    }
+
+    public void setTotalMarks(int totalMarks) {
+        this.totalMarks = totalMarks;
+    }
 }

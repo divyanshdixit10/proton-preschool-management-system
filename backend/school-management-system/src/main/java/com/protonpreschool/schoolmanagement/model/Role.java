@@ -1,22 +1,33 @@
 package com.protonpreschool.schoolmanagement.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
+@Table(name = "roles")
 public class Role {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name; // For example: ROLE_USER, ROLE_ADMIN
+    @Column(nullable = false, unique = true)
+    private String name;  // ✅ Added name field
 
-    // Getters and setters
+    // ✅ Default Constructor
+    public Role() {}
 
-    public String getName() {
+    // ✅ Constructor with field
+    public Role(String name) {
+        this.name = name;
+    }
+
+    // ✅ Getter & Setter for name
+    public String getName() {  // ✅ Added getName() method
         return name;
     }
 
@@ -24,5 +35,7 @@ public class Role {
         this.name = name;
     }
 
-    // Other getters and setters
+    public Long getId() {
+        return id;
+    }
 }

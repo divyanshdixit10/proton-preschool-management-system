@@ -3,7 +3,11 @@ package com.protonpreschool.schoolmanagement.controller;
 import com.protonpreschool.schoolmanagement.model.Role;
 import com.protonpreschool.schoolmanagement.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+//import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/roles")
@@ -12,15 +16,31 @@ public class RoleController {
     @Autowired
     private RoleService roleService;
 
-    // Create a new role
-    @PostMapping
-    public Role createRole(@RequestBody Role role) {
-        return roleService.saveRole(role);
+    @GetMapping
+    public List<Role> getAllRoles() {
+        return roleService.getAllRoles();
     }
 
-    // Get role by name
-    @GetMapping("/{roleName}")
-    public Role getRoleByName(@PathVariable String roleName) {
-        return roleService.getRoleByName(roleName);
+    @GetMapping("/{id}")
+    public ResponseEntity<Role> getRoleById(@PathVariable Long id) {
+        return roleService.getRoleById(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    @PostMapping
+    public Role createRole(@RequestBody Role role) {
+        return roleService.createRole(role);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Role> updateRole(@PathVariable Long id, @RequestBody Role roleDetails) {
+        return ResponseEntity.ok(roleService.updateRole(id, roleDetails));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteRole(@PathVariable Long id) {
+        roleService.deleteRole(id);
+        return ResponseEntity.noContent().build();
     }
 }

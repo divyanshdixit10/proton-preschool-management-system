@@ -4,20 +4,34 @@ import com.protonpreschool.schoolmanagement.model.Role;
 import com.protonpreschool.schoolmanagement.repository.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class RoleService {
-
     @Autowired
     private RoleRepository roleRepository;
 
-    // Fetch role by name
-    public Role getRoleByName(String roleName) {
-        return roleRepository.findByName(roleName);
+    public List<Role> getAllRoles() {
+        return roleRepository.findAll();
     }
 
-    // Save a new role
-    public Role saveRole(Role role) {
+    public Optional<Role> getRoleById(Long id) {
+        return roleRepository.findById(id);
+    }
+
+    public Role createRole(Role role) {
         return roleRepository.save(role);
+    }
+
+    public Role updateRole(Long id, Role roleDetails) {
+        return roleRepository.findById(id).map(role -> {
+            role.setName(roleDetails.getName());
+            return roleRepository.save(role);
+        }).orElseThrow(() -> new RuntimeException("Role not found"));
+    }
+
+    public void deleteRole(Long id) {
+        roleRepository.deleteById(id);
     }
 }

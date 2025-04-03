@@ -1,33 +1,59 @@
 package com.protonpreschool.schoolmanagement.service;
 
 import com.protonpreschool.schoolmanagement.dto.ExamDTO;
+import com.protonpreschool.schoolmanagement.mapper.ExamMapper;
 import com.protonpreschool.schoolmanagement.model.Exam;
 import com.protonpreschool.schoolmanagement.repository.ExamRepository;
-import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
 public class ExamService {
 
-    @Autowired
-    private ExamRepository examRepository;
+    private final ExamRepository examRepository;
+    private final ExamMapper examMapper;
 
-    @Autowired
-    private ModelMapper modelMapper;
+    public ExamService(ExamRepository examRepository, ExamMapper examMapper) {
+        this.examRepository = examRepository;
+        this.examMapper = examMapper;
+    }
 
+    // ✅ Get all exams (convert to DTO)
     public List<ExamDTO> getAllExams() {
-        return examRepository.findAll().stream()
-                .map(exam -> modelMapper.map(exam, ExamDTO.class))
+        return examRepository.findAll()
+                .stream()
+                .map(examMapper::toDTO)
                 .collect(Collectors.toList());
     }
 
-    public ExamDTO addExam(ExamDTO examDTO) {
-        Exam exam = modelMapper.map(examDTO, Exam.class);
+    // ✅ Get exam by ID (convert to DTO)
+    public Optional<ExamDTO> getExamById(Long id) {
+        return examRepository.findById(id).map(examMapper::toDTO);
+    }
+
+    // ✅ Create a new exam (convert DTO to Entity, save, and return DTO)
+    public ExamDTO saveExam(ExamDTO examDTO) {
+        Exam exam = examMapper.toEntity(examDTO);
         Exam savedExam = examRepository.save(exam);
-        return modelMapper.map(savedExam, ExamDTO.class);
+        return examMapper.toDTO(savedExam);
+    }
+
+    // ✅ Update an existing exam (convert DTO to Entity, save, and return DTO)
+    public Optional<ExamDTO> updateExam(Long id, ExamDTO updatedExamDTO) {
+        return examRepository.findById(id).map(existingExam -> {
+            existingExam.setName(updatedExamDTO.getName());
+            existingExam.setDate(updatedExamDTO.getDate());
+            existingExam.setTotalMarks(updatedExamDTO.getTotalMarks());
+            Exam updatedExam = examRepository.save(existingExam);
+            return examMapper.toDTO(updatedExam);
+        });
+    }
+
+    // ✅ Delete exam by ID
+    public void deleteExam(Long id) {
+        examRepository.deleteById(id);
     }
 }

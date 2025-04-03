@@ -1,57 +1,86 @@
 package com.protonpreschool.schoolmanagement.model;
 
-import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
 @Entity
-@Getter
-@Setter
 @Table(name = "students")
 public class Student extends BaseEntity {
+
     /**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private String firstName;
-    private String lastName;
-    private String dateOfBirth;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user; 
+	@Column(nullable = false)
+    private String name;
 
-    @ManyToOne
-    @JoinColumn(name = "class_id")
-    private SchoolClass schoolClass; 
+    @Column(nullable = false, unique = true)
+    private String email;
+
+    @Column(nullable = false)
+    private String phoneNumber;
+
+    @Column(nullable = false)
+    private String grade;  // ✅ Added grade field
 
     @ManyToOne
     @JoinColumn(name = "parent_id")
     private Parent parent;
 
-	
-    
-    public String getFirstName() {
-		return firstName;
-	}
+    // ✅ Default Constructor
+    public Student() {}
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
+    // ✅ Constructor with fields
+    public Student(String name, String email, String phoneNumber, String grade, Parent parent) {
+        this.name = name;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.grade = grade;
+        this.parent = parent;
+    }
 
-	public String getLastName() {
-		return lastName;
-	}
+    // ✅ Getters & Setters
+    public String getName() {
+        return name;
+    }
 
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public String getDateOfBirth() {
-		return dateOfBirth;
-	}
+    public String getEmail() {
+        return email;
+    }
 
-	public void setDateOfBirth(String dateOfBirth) {
-		this.dateOfBirth = dateOfBirth;
-	}
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getGrade() {  // ✅ Added getGrade() method
+        return grade;
+    }
+
+    public void setGrade(String grade) {
+        this.grade = grade;
+    }
+
+    public Parent getParent() {
+        return parent;
+    }
+
+    public void setParent(Parent parent) {
+        this.parent = parent;
+    }
 }

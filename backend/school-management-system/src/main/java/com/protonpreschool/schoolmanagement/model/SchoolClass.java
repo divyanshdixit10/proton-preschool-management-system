@@ -1,40 +1,36 @@
 package com.protonpreschool.schoolmanagement.model;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-import java.util.List;
 
 @Entity
-@Getter
-@Setter
-@Table(name = "classes")
-public class SchoolClass extends BaseEntity {
-    /**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	private String className;
+@Table(name = "school_classes")
+public class SchoolClass {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(nullable = false)
+    private String className;
+
+    @Column(nullable = false)
     private String section;
 
-    @OneToMany(mappedBy = "schoolClass", cascade = CascadeType.ALL)
-    private List<Student> students;
+    // ✅ Manually adding setter methods
+    public void setClassName(String className) {
+        this.className = className;
+    }
 
-	
-    
+    public void setSection(String section) {
+        this.section = section;
+    }
+
+    // ✅ Also add getter methods if needed
     public String getClassName() {
-		return className;
-	}
+        return className;
+    }
 
-	public void setClassName(String className) {
-		this.className = className;
-	}
-
-	public String getSection() {
-		return section;
-	}
-
-	public void setSection(String section) {
-		this.section = section;
-	}
+    public String getSection() {
+        return section;
+    }
 }
